@@ -1,0 +1,55 @@
+version: "2"
+services:
+  core:
+    restart: always
+    image: registry:latest
+    container_name: "core"
+    networks:
+      internal:
+        ipv4_address: 10.1.0.4
+    volumes:
+      - VOLUME_REPLACED:/var/lib/registry
+      - SECRETS_REPLACED/htpasswd_registry:/etc/docker/registry/htpasswd
+      - SERVER_REPLACED/hubconfig.yaml:/etc/docker/registry/config.yml
+  clean:
+    restart: always
+    image: jiankaiwang/registry-cleaner:latest
+    container_name: "clean"
+    networks:
+      internal:
+        ipv4_address: 10.1.0.5
+    volumes:
+      - VOLUME_REPLACED:/var/lib/registry
+      - SERVER_REPLACED/gc.yaml:/etc/docker/registry/gc.yaml
+  ui:
+    restart: always
+    image: joxit/docker-registry-ui:static
+    container_name: "ui"
+    networks:
+      internal:
+        ipv4_address: 10.1.0.3
+    environment:
+      - REGISTRY_URL=http://10.1.0.4:5000
+      - DELETE_IMAGES=true
+      - REGISTRY_TITLE=Registry
+  htttpserver:
+    image: nginx:latest
+    container_name: "httpserver"
+    networks:
+      internal:    
+        ipv4_address: 10.1.0.2
+    ports:
+      - "10443:443"
+    volumes:
+      - SERVER_REPLACED/registry.conf:/etc/nginx/conf.d/default.conf
+      - SECRETS_REPLACED/nginx.cert:/etc/nginx/ssl/nginx.cert
+      - SECRETS_REPLACED/nginx.key:/etc/nginx/ssl/nginx.key
+
+networks:
+  internal:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.1.0.0/24
+          gateway: 10.1.0.1

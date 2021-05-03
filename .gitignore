@@ -1,0 +1,6 @@
+# repo
+volume/docker
+
+# mac
+.DS_Store
+tmp/
