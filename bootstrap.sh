@@ -65,13 +65,20 @@ done
 # replace all paths to the docker-compose file
 cp $SERVER/registry_template.yaml $SERVER/registry.yaml
 VOLUMEPATH=$(echo $VOLUME | sed 's_/_\\/_g')
-sed -i "" "s/VOLUME_REPLACED/$VOLUMEPATH/g" $SERVER/registry.yaml
-
 SECRETSPATH=$(echo $SECRETS | sed 's_/_\\/_g')
-sed -i "" "s/SECRETS_REPLACED/$SECRETSPATH/g" $SERVER/registry.yaml
-
 SERVERPATH=$(echo $SERVER | sed 's_/_\\/_g')
-sed -i "" "s/SERVER_REPLACED/$SERVERPATH/g" $SERVER/registry.yaml
+
+ostype = "$(uname -s)"
+case "$ostype" in
+  Darwin*) 
+    sed -i "" "s/VOLUME_REPLACED/$VOLUMEPATH/g" $SERVER/registry.yaml;
+    sed -i "" "s/SECRETS_REPLACED/$SECRETSPATH/g" $SERVER/registry.yaml;
+    sed -i "" "s/SERVER_REPLACED/$SERVERPATH/g" $SERVER/registry.yaml;;
+  *)
+    sed -i "s/VOLUME_REPLACED/$VOLUMEPATH/g" $SERVER/registry.yaml;
+    sed -i "s/SECRETS_REPLACED/$SECRETSPATH/g" $SERVER/registry.yaml;
+    sed -i "s/SERVER_REPLACED/$SERVERPATH/g" $SERVER/registry.yaml;;
+esac
 
 # generate the ssl certificate for nginx
 while true; do

@@ -23,7 +23,7 @@ services:
       - SERVER_REPLACED/gc.yaml:/etc/docker/registry/gc.yaml
   ui:
     restart: always
-    image: joxit/docker-registry-ui:static
+    image: joxit/docker-registry-ui:1.5-static
     container_name: "ui"
     networks:
       internal:
