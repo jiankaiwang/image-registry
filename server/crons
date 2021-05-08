@@ -1,0 +1,2 @@
+# MIN HOUR  DOM MON DOW CMD
+0 22 * * * sh /cron/clean.sh 2>&1

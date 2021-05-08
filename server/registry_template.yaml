@@ -9,18 +9,18 @@ services:
         ipv4_address: 10.1.0.4
     volumes:
       - VOLUME_REPLACED:/var/lib/registry
-      - SECRETS_REPLACED/htpasswd_registry:/etc/docker/registry/htpasswd
       - SERVER_REPLACED/hubconfig.yaml:/etc/docker/registry/config.yml
-  # clean:
-  #   restart: always
-  #   image: jiankaiwang/registry-cleaner:latest
-  #   container_name: "clean"
-  #   networks:
-  #     internal:
-  #       ipv4_address: 10.1.0.5
-  #   volumes:
-  #     - VOLUME_REPLACED:/var/lib/registry
-  #     - SERVER_REPLACED/gc.yaml:/etc/docker/registry/gc.yaml
+  clean:
+    restart: always
+    image: jiankaiwang/registry-cleaner:latest
+    container_name: "clean"
+    networks:
+      internal:
+        ipv4_address: 10.1.0.5
+    volumes:
+      - VOLUME_REPLACED:/var/lib/registry
+      - SERVER_REPLACED/gc.yaml:/etc/docker/registry/gc.yaml
+      - SERVER_REPLACED/crons:/cron/crons
   ui:
     restart: always
     image: joxit/docker-registry-ui:1.5-static

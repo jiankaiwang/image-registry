@@ -59,7 +59,7 @@ CheckServerPath() {
   done 
 
   # for registry
-  HTPASSWDFILE=$SECRETS/htpasswd_registry
+  HTPASSWDFILE=$SECRETS/htpasswd
   if [ ! -f $HTPASSWDFILE ] || [ ! -r $HTPASSWDFILE ]; then
     ErrorMsg "The htpasswd file $HTPASSWDFILE was not found.";
     exit 5;
@@ -78,9 +78,9 @@ elif [ $OPTION == "start" ]; then
   echo "Start the private dockerhub registry service."
 
   # start the image registry
-  docker compose -f $SERVER/registry.yaml up -d
+  docker-compose -f $SERVER/registry.yaml up -d
 elif [ $OPTION == "stop" ]; then
-  docker compose -f $SERVER/registry.yaml down
+  docker-compose -f $SERVER/registry.yaml down
 elif [ $OPTION == "reload" ]; then
   docker exec -it httpserver nginx -s reload
 fi

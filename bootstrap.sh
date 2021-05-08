@@ -68,7 +68,7 @@ VOLUMEPATH=$(echo $VOLUME | sed 's_/_\\/_g')
 SECRETSPATH=$(echo $SECRETS | sed 's_/_\\/_g')
 SERVERPATH=$(echo $SERVER | sed 's_/_\\/_g')
 
-ostype = "$(uname -s)"
+ostype="$(uname -s)"
 case "$ostype" in
   Darwin*) 
     sed -i "" "s/VOLUME_REPLACED/$VOLUMEPATH/g" $SERVER/registry.yaml;
@@ -112,7 +112,7 @@ done
 
 # for registry
 # docker run -it --rm xmartlabs/htpasswd user user > ./secrets/htpasswd_registry
-HTPASSWDFILE=$SECRETS/htpasswd_registry
+HTPASSWDFILE=$SECRETS/htpasswd
 if [ ! -f $HTPASSWDFILE ] || [ ! -r $HTPASSWDFILE ]; then
   ErrorMsg "The htpasswd file $HTPASSWDFILE was not found.";
   exit 5;

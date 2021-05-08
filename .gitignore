@@ -1,6 +1,11 @@
 # repo
 volume/docker
 
+# generated resource
+server/registry.yaml
+secrets/nginx.cert
+secrets/nginx.key
+
 # mac
 .DS_Store
 tmp/

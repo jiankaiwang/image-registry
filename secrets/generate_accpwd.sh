@@ -14,7 +14,7 @@ SecureServer() {
   rm -rf htpasswd
 
   # generated the user's account and password for nginx
-  docker run --rm -it xmartlabs/htpasswd -Bn user passwd >> htpasswd
+  docker run --rm -it xmartlabs/htpasswd -Bm user passwd >> htpasswd
 }
 
 SecureServer
