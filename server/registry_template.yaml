@@ -11,16 +11,16 @@ services:
       - VOLUME_REPLACED:/var/lib/registry
       - SECRETS_REPLACED/htpasswd_registry:/etc/docker/registry/htpasswd
       - SERVER_REPLACED/hubconfig.yaml:/etc/docker/registry/config.yml
-  clean:
-    restart: always
-    image: jiankaiwang/registry-cleaner:latest
-    container_name: "clean"
-    networks:
-      internal:
-        ipv4_address: 10.1.0.5
-    volumes:
-      - VOLUME_REPLACED:/var/lib/registry
-      - SERVER_REPLACED/gc.yaml:/etc/docker/registry/gc.yaml
+  # clean:
+  #   restart: always
+  #   image: jiankaiwang/registry-cleaner:latest
+  #   container_name: "clean"
+  #   networks:
+  #     internal:
+  #       ipv4_address: 10.1.0.5
+  #   volumes:
+  #     - VOLUME_REPLACED:/var/lib/registry
+  #     - SERVER_REPLACED/gc.yaml:/etc/docker/registry/gc.yaml
   ui:
     restart: always
     image: joxit/docker-registry-ui:1.5-static
@@ -44,6 +44,7 @@ services:
       - SERVER_REPLACED/registry.conf:/etc/nginx/conf.d/default.conf
       - SECRETS_REPLACED/nginx.cert:/etc/nginx/ssl/nginx.cert
       - SECRETS_REPLACED/nginx.key:/etc/nginx/ssl/nginx.key
+      - SECRETS_REPLACED/htpasswd:/etc/nginx/ssl/htpasswd
 
 networks:
   internal:

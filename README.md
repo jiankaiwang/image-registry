@@ -1,5 +1,11 @@
 # Image Registry
 
+## Architecture
+
+The architecture is composed of four containers connected by `docker compose`.
+
+![](./data/image-registry.png)
+
 ## How to use
 
 Start the image registry service.

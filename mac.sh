@@ -1,4 +1,5 @@
 #!/bin/bash
+# maintainer: JianKai Wang <https://jiankaiwang.no-ip.biz/>
 
 OPTION=$1
 VALUE=$2 || "_not"
@@ -43,11 +44,11 @@ elif [ $OPTION == "add" ]; then
     exit 2;
   fi
   Sudoer
-  AddCert $VALUE || ErrorMsg "Failed in adding the certificate, $VALUE."; exit 3; 
+  AddCert $VALUE || ErrorMsg "Failed in adding the certificate, $VALUE.";
   RestartDocker
 elif [ $OPTION == "remove" ]; then
   Sudoer
-  RemoveCert $VALUE || ErrorMsg "Failed in deleting the certificate named $VALUE"; exit 4;
+  RemoveCert $VALUE || ErrorMsg "Failed in deleting the certificate named $VALUE";
   RestartDocker
 else
   ErrorMsg "The option $OPTION is not allowed."

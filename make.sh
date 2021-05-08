@@ -70,15 +70,18 @@ if [ $# -eq 0 ] || [ $OPTION == "help" ] || [ $OPTION == "-h" ] || [ $OPTION == 
   echo "Usage:"
   echo "  bash make.sh [option]\n"
   echo "Option:"
-  echo "  start: start the private dockerhub registry service"
-  echo "  stop:  stop the service"
+  echo "  start:  start the private dockerhub registry service"
+  echo "  stop:   stop the service"
+  echo "  reload: reload the server to use the new configure"
 elif [ $OPTION == "start" ]; then
   CheckServerPath
   echo "Start the private dockerhub registry service."
 
   # start the image registry
-  docker-compose -f $SERVER/registry.yaml up -d
+  docker compose -f $SERVER/registry.yaml up -d
 elif [ $OPTION == "stop" ]; then
-  docker-compose -f $SERVER/registry.yaml down
+  docker compose -f $SERVER/registry.yaml down
+elif [ $OPTION == "reload" ]; then
+  docker exec -it httpserver nginx -s reload
 fi
 
